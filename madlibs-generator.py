@@ -1,12 +1,22 @@
-#prompts for a series of input
-programmer = input("Someones Name: ")
-company = input("A Company Name: ")
-language1 = input("A Programming Language: ")
-recruiter = input("Someone else's Name: ")
-language2 = input("Another Programmin Language: ")
+#!/usr/bin/env python3
+"""Mad-libs story generator — command-line entry point."""
 
-#printing the story with the given inputs
-print("--------------------------------------------------------------------")
-print(programmer + " went to attend an interview at " + company + " for the first time.")
-print("He knows well to code in " + language1 +".")
-print(recruiter + ', the HR says that "we need a ' + language2 + ' developer, so You can go home".')
+import sys
+import os
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+from games.madlibs import collect_words, build_story
+from games.utils import print_separator
+
+
+def main():
+    """Collect words from the user and print the generated story."""
+    print("Welcome to Mad Libs! Enter the requested words:\n")
+    words = collect_words()
+    print_separator()
+    print(build_story(words))
+
+
+if __name__ == "__main__":
+    main()

@@ -1,22 +1,40 @@
-import random #for random number generation
+#!/usr/bin/env python3
+"""Number-guessing game — command-line entry point."""
 
-rand_num = random.randrange(0,100) #random number(within range 0 to 100) is generated and stored
-guessCheck = "wrong" #for contolling the loop
+import sys
+import os
 
-print("Welcome to Number Guess")
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-#loop
-while guessCheck == "wrong":
-    user_input = int(input("Please input a number between 0 and 100:")) #user input is taken as integer
-    
-    #checks for the correctness of guess
-    if user_input < rand_num:
-        print("Its Lower than actual number. Try Again.") #if guess is lower again executes the loop
-    elif user_input > rand_num:
-        print("Its Higher than actual number. Try Again.") #if guess is higher again executes the loop
-    else:
-        print("Bravo, You Got It!")
-        guessCheck = "correct" #if guess is correct terminates loop by updating value of loop variable 
+from games.number_guess import (
+    pick_secret,
+    evaluate_guess,
+    result_message,
+    CORRECT,
+    DEFAULT_LOW,
+    DEFAULT_HIGH,
+)
+from games.utils import get_int_in_range
 
-print("Thank You for Playing Number Guess. See You Again") #executes when loop terminated
-        
+
+def main():
+    """Run the number-guessing game loop."""
+    print("Welcome to Number Guess")
+    secret = pick_secret()
+
+    while True:
+        guess = get_int_in_range(
+            f"Please input a number between {DEFAULT_LOW} and {DEFAULT_HIGH}: ",
+            DEFAULT_LOW,
+            DEFAULT_HIGH,
+        )
+        result = evaluate_guess(guess, secret)
+        print(result_message(result))
+        if result == CORRECT:
+            break
+
+    print("Thank You for Playing Number Guess. See You Again")
+
+
+if __name__ == "__main__":
+    main()
