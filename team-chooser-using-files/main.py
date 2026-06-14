@@ -1,30 +1,54 @@
+from pathlib import Path
 from random import choice
 
-players = []
-file = open('players.txt', 'r')
-players = file.read().splitlines()
+# Resolve data files relative to THIS script, not the current working directory,
+# so the example works no matter where it is launched from.
+BASE_DIR = Path(__file__).resolve().parent
 
-teams = []
-file = open('teams.txt', 'r')
-teams = file.read().splitlines()
 
-print('\nPlayers: ', players)
-print('Teams: ', teams)
+def load_lines(filename):
+    """Read non-empty, stripped lines from a file located next to this script."""
+    path = BASE_DIR / filename
+    with open(path, "r") as f:
+        return [line.strip() for line in f.read().splitlines() if line.strip()]
 
-teamA = []
-teamB = []
 
-while len(players) > 0:
-	playerA = choice(players)
-	teamA.append(playerA)
-	players.remove(playerA)
+def split_teams(players):
+    """Split players into two teams by alternating random picks.
 
-	if players == []:
-		break
+    Returns a (teamA, teamB) tuple. The input list is left unmodified.
+    """
+    pool = list(players)
+    teamA = []
+    teamB = []
 
-	playerB = choice(players)
-	teamB.append(playerB)
-	players.remove(playerB)
+    while pool:
+        pick = choice(pool)
+        teamA.append(pick)
+        pool.remove(pick)
 
-print('\nTeam A: ', teamA)
-print('Team B: ', teamB)
+        if not pool:
+            break
+
+        pick = choice(pool)
+        teamB.append(pick)
+        pool.remove(pick)
+
+    return teamA, teamB
+
+
+def main():
+    players = load_lines("players.txt")
+    teams = load_lines("teams.txt")
+
+    print("\nPlayers: ", players)
+    print("Teams: ", teams)
+
+    teamA, teamB = split_teams(players)
+
+    print("\nTeam A: ", teamA)
+    print("Team B: ", teamB)
+
+
+if __name__ == "__main__":
+    main()
