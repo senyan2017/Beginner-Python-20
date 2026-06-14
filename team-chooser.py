@@ -1,27 +1,25 @@
-#!/usr/bin/env python3
-"""Team chooser (hardcoded names) — command-line entry point."""
+from random import choice
 
-import sys
-import os
+players = ['Sam', 'John', 'Mark', 'Elon', 'Joy', 'Tim', 'Rony', 'Chan']
+teams = ['Python', 'Java', 'Ruby', 'Javascript', 'Hadoop', 'Kotlin']
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+print('\nPlayers: ', players)
+print('Teams: ', teams)
 
-from games.team_chooser import split_into_teams
+teamA = []
+teamB = []
 
-# Default rosters used when no file is supplied
-DEFAULT_PLAYERS = ["Sam", "John", "Mark", "Elon", "Joy", "Tim", "Rony", "Chan"]
-DEFAULT_TEAMS = ["Python", "Java", "Ruby", "Javascript", "Hadoop", "Kotlin"]
+while len(players) > 0:
+	playerA = choice(players)
+	teamA.append(playerA)
+	players.remove(playerA)
 
+	if players = []:
+		break;
+	
+	playerB = choice(players)
+	teamB.append(playerB)
+	players.remove(playerB)
 
-def main():
-    """Split the default player list into two random teams."""
-    print("\nPlayers: ", DEFAULT_PLAYERS)
-    print("Teams:   ", DEFAULT_TEAMS)
-
-    teams = split_into_teams(DEFAULT_PLAYERS)
-    print("\nTeam A: ", teams[0])
-    print("Team B: ", teams[1])
-
-
-if __name__ == "__main__":
-    main()
+print('\nTeam A: ', teamA)
+print('Team B: ', teamB)

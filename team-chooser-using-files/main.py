@@ -1,32 +1,30 @@
-#!/usr/bin/env python3
-"""Team chooser (file-based) — command-line entry point.
+from random import choice
 
-Reads players and team names from players.txt and teams.txt located in
-the same directory as this script.
-"""
+players = []
+file = open('players.txt', 'r')
+players = file.read().splitlines()
 
-import sys
-import os
+teams = []
+file = open('teams.txt', 'r')
+teams = file.read().splitlines()
 
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir))
+print('\nPlayers: ', players)
+print('Teams: ', teams)
 
-from games.team_chooser import split_into_teams, load_lines
+teamA = []
+teamB = []
 
+while len(players) > 0:
+	playerA = choice(players)
+	teamA.append(playerA)
+	players.remove(playerA)
 
-def main():
-    """Load players/teams from files and display the random split."""
-    here = os.path.dirname(os.path.abspath(__file__))
+	if players == []:
+		break
 
-    players = load_lines(os.path.join(here, "players.txt"))
-    teams = load_lines(os.path.join(here, "teams.txt"))
+	playerB = choice(players)
+	teamB.append(playerB)
+	players.remove(playerB)
 
-    print("\nPlayers: ", players)
-    print("Teams:   ", teams)
-
-    result = split_into_teams(players)
-    print("\nTeam A: ", result[0])
-    print("Team B: ", result[1])
-
-
-if __name__ == "__main__":
-    main()
+print('\nTeam A: ', teamA)
+print('Team B: ', teamB)
