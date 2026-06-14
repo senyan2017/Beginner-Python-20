@@ -1,32 +1,38 @@
 from random import randint
 
-player = input('rock (r), paper (p) or scissors (s)?')
-chosen = randint(1,3)
+player = input('rock (r), paper (p) or scissors (s)? ').strip().lower()
+
+# validate player input
+if player not in ('r', 'p', 's'):
+    print('Invalid input! Please enter r, p, or s.')
+    exit()
+
+chosen = randint(1, 3)
 
 if chosen == 1:
-	computer = 'r'
+    computer = 'r'
 elif chosen == 2:
-	computer = 'p'
+    computer = 'p'
 else:
-	computer = 's'
+    computer = 's'
 print(player, 'vs', computer)
 
 #rock blunts scissor
 #paper covers rock
 #scissor cuts paper
 if player == computer:
-	print('DRAW!')
+    print('DRAW!')
 elif player == 'r' and computer == 's':
-	print('Player Wins!')
+    print('Player Wins!')
 elif player == 'r' and computer == 'p':
-	print('Computer Wins!')
+    print('Computer Wins!')
 elif player == 'p' and computer == 'r':
-	print('Player Wins!')
+    print('Player Wins!')
 elif player == 'p' and computer == 's':
-	print('Computer Wins!')
-elif player == 'r' and computer == 's':
-	print('Player Wins!')
-elif player == 'r' and computer == 'p':
-	print('Computer Wins!')
+    print('Computer Wins!')
+elif player == 's' and computer == 'r':
+    print('Computer Wins!')
+elif player == 's' and computer == 'p':
+    print('Player Wins!')
 else:
-	print('Invalid input')
+    print('Invalid input')

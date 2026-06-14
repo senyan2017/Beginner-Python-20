@@ -1,12 +1,14 @@
+import os
 from random import choice
 
-players = []
-file = open('players.txt', 'r')
-players = file.read().splitlines()
+# resolve file paths relative to this script's directory, not the working directory
+script_dir = os.path.dirname(os.path.abspath(__file__))
 
-teams = []
-file = open('teams.txt', 'r')
-teams = file.read().splitlines()
+with open(os.path.join(script_dir, 'players.txt'), 'r') as f:
+    players = [line.strip() for line in f if line.strip()]
+
+with open(os.path.join(script_dir, 'teams.txt'), 'r') as f:
+    teams = [line.strip() for line in f if line.strip()]
 
 print('\nPlayers: ', players)
 print('Teams: ', teams)
