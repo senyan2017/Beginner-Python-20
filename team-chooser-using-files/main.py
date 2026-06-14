@@ -1,30 +1,27 @@
-from random import choice
+from pathlib import Path
+import sys
 
-players = []
-file = open('players.txt', 'r')
-players = file.read().splitlines()
+ROOT_DIR = Path(__file__).resolve().parents[1]
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
 
-teams = []
-file = open('teams.txt', 'r')
-teams = file.read().splitlines()
+from team_chooser_core import load_lines, split_into_teams
 
-print('\nPlayers: ', players)
-print('Teams: ', teams)
+BASE_DIR = Path(__file__).resolve().parent
 
-teamA = []
-teamB = []
 
-while len(players) > 0:
-	playerA = choice(players)
-	teamA.append(playerA)
-	players.remove(playerA)
+def main():
+    players = load_lines(BASE_DIR / 'players.txt')
+    teams = load_lines(BASE_DIR / 'teams.txt')
 
-	if players == []:
-		break
+    print('\nPlayers: ', players)
+    print('Teams: ', teams)
 
-	playerB = choice(players)
-	teamB.append(playerB)
-	players.remove(playerB)
+    team_a, team_b = split_into_teams(players)
 
-print('\nTeam A: ', teamA)
-print('Team B: ', teamB)
+    print('\nTeam A: ', team_a)
+    print('Team B: ', team_b)
+
+
+if __name__ == '__main__':
+    main()
